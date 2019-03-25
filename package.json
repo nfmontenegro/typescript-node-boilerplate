@@ -2,10 +2,13 @@
   "name": "workspace",
   "version": "1.0.0",
   "description": "typescript node server boilerplate",
-  "main": "app.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "npm test",
-    "watch": "tsc -w"
+    "build-ts": "tsc",
+    "start": "npm run serve",
+    "serve": "node dist/index.js",
+    "watch-node": "nodemon dist/index.js",
+    "watch-ts": "tsc -w"
   },
   "author": "Nicolás Flores Montenegro",
   "license": "ISC",
@@ -16,7 +19,6 @@
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
-    "ts-node": "^8.0.3",
     "typescript": "^3.3.4000"
   }
 }
