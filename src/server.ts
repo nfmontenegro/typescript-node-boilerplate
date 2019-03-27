@@ -3,7 +3,7 @@ import express, {Application} from 'express'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 
-import routes from './routes'
+import routes from './routes/user'
 
 require('dotenv').config()
 
