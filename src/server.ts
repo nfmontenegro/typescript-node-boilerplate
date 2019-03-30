@@ -2,24 +2,20 @@ import 'reflect-metadata'
 import cors from 'cors'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
-import {createConnection, createConnections} from 'typeorm'
-import express, {Application, Response, Request, NextFunction} from 'express'
+import express, {Application, Response, Request} from 'express'
 
 import routes from './routes/user'
+import {ormConnection, handleError} from './middlewares'
 
 require('dotenv').config()
 
 const app: Application = express()
 
 app.use(cors())
-app.use(bodyParser.json())
 app.use(morgan('short'))
+app.use(bodyParser.json())
 
-app.use(async (req: any, res: Response, next: NextFunction) => {
-  const connection = await createConnection()
-  req.ormConnection = connection
-  next()
-})
+app.use(ormConnection)
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Typescript Boilerplate1')

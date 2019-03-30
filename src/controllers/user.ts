@@ -1,30 +1,27 @@
 import {Response} from 'express'
-// import {User} from '../interfaces/user'
+
 import {User} from '../entity/User'
+import {IUser} from '../interfaces/user'
+
+export const createUser = async (req: any, res: Response): Promise<Response | void> => {
+  if (!req.body) throw new Error('No body!')
+  const user: User = User.create(req.body)
+
+  const userSaved: IUser = await user.save()
+
+  await req.conn.close()
+  res.json({...userSaved})
+}
+
+export const getUser = async (req: any, res: Response): Promise<Response | void> => {
+  const user: IUser = await User.findOne(req.params.id)
+  await req.conn.close
+  res.json(user)
+}
 
 export const getUsers = async (req: any, res: Response): Promise<Response | void> => {
-  try {
-    const users: Array<string> = ['Nicolás', 'Carolina']
-    // let user: User = new User()
-    // user.firstName = 'Nicolás'
-    // user.lastName = 'Flores'
-    // user.email = 'nicolas.fmontenegro@gmail.com'
-    // user.password = '123'
+  const users = await User.find()
 
-    const user = User.create({
-      firstName: 'Nicolás',
-      lastName: 'Flores',
-      email: 'carito@gmail.com',
-      password: 'manchi'
-    })
-
-    const userSaved = await user.save()
-
-    // const userSaved = await req.ormConnection.manager.save(user)
-    console.log('User:', userSaved)
-    await req.ormConnection.close()
-    res.json({userSaved})
-  } catch (err) {
-    console.log('Err:', err)
-  }
+  await req.conn.close()
+  res.json(users)
 }
