@@ -9,11 +9,15 @@ export const createUser = async (req: Request, res: Response): Promise<Response 
   try {
     if (!Object.keys(req.body).length) res.status(200).json({message: 'Empty body!'})
     const SALT_ROUND: number = 10
+    const {password, email}: {password: string; email: string} = req.body
     const userRepository = getManager().getRepository(User)
-    const password: string = req.body.password
+
+    const user: IUser = await userRepository.findOne({where: {email}})
+    if (user) res.status(200).json({message: `User with email ${email} exist!`})
+
     const hashedPassword: string = await bcrypt.hash(password, SALT_ROUND)
-    const user: object = userRepository.create({...req.body, password: hashedPassword})
-    const userSaved = await userRepository.save(user)
+    const userCreated: object = userRepository.create({...req.body, password: hashedPassword})
+    const userSaved: IUser = await userRepository.save(userCreated)
 
     res.json(userSaved)
   } catch (err) {
