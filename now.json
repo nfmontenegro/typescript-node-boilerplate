@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "name": "ts-node-boilerplate",
+  "alias": "typescript-node-boilerplate",
+  "builds": [
+    {
+      "src": "src/server.ts",
+      "use": "@now/node@canary"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/index.ts"
+    }
+  ]
+}
