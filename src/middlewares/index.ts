@@ -1,6 +1,6 @@
-import {Response, NextFunction} from 'express'
+// import {Response, NextFunction} from 'express'
 
-// async function ormConnection(req: any, res: Response, next: NextFunction) {
+// async function ormConnection(req: any, res: Response, next: NextFunction): Promise<any> {
 //   try {
 //     const connection = await createConnection()
 //     req.conn = connection
