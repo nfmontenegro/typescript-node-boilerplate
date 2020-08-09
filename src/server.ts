@@ -1,33 +1,11 @@
-import 'reflect-metadata'
-import cors from 'cors'
-import morgan from 'morgan'
-import bodyParser from 'body-parser'
-import {createConnection} from 'typeorm'
-import express, {Application, Response, Request} from 'express'
+import * as dotenv from "dotenv";
+dotenv.config();
 
-import routes from './routes/user'
+import App from "./app";
+import UserController from "./controllers/users/user.controller";
 
-require('dotenv').config()
+import {PORT} from "./config/constants";
 
-createConnection()
-  .then(() => {
-    const app: Application = express()
+const app = new App([new UserController()], Number(PORT));
 
-    app.use(cors())
-    app.use(morgan('short'))
-    app.use(bodyParser.json())
-
-    app.get('/', (req: Request, res: Response) => {
-      res.send('Typescript Boilerplate')
-    })
-
-    app.use('/api/v1', routes)
-
-    app.listen(process.env.PORT, (err: Error) => {
-      if (err) throw new Error(`Server error ${err}`)
-      console.log(`🚀 Server listening: http://localhost:${process.env.PORT}`)
-      console.log('\n')
-      console.log('=> Environment: ', process.env.ENVIRONMENT)
-    })
-  })
-  .catch(error => console.log('TypeORM connection error:', error))
+app.listen();
