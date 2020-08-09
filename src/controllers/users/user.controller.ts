@@ -12,9 +12,9 @@ class UserController {
     this.router.get(this.path, this.getUsers);
   }
 
-  getUsers = (req: express.Request, res: express.Response): void => {
-    res.send("Hello");
-  };
+  public async getUsers(req: express.Request, res: express.Response): Promise<express.Response> {
+    return res.send("Hello");
+  }
 }
 
 export default UserController;
